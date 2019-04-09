@@ -67,4 +67,28 @@ public class CatTest {
 		IntStream.range(0, Awake).forEach(i -> animal.tick());
 		assertTrue(animal.isAsleep());
 	}
+
+	//Testcase where cat gets stuck in playful mood forever
+	@Test
+	void testAnimalFeedToLate() {
+		//Waiting while animal is sleeping
+		IntStream.range(0, Sleep).forEach(i -> animal.tick());
+		//Feed after six hungry ticks
+		assertTrue(animal.isHungry());
+		animal.tick();
+		animal.tick();
+		animal.tick();
+		animal.tick();
+		animal.tick();
+		animal.tick();
+
+		animal.feed();
+		assertTrue(animal.isDigesting());
+		//Waiting while animal is digesting
+		IntStream.range(0, Digest).forEach(i -> animal.tick());
+		assertTrue(animal.isPlayful());
+		//Cat getting Stuck in playful mood
+		IntStream.range(0,10).forEach(i -> animal.tick());
+		assertTrue(animal.isAsleep());
+	}
 }
